@@ -3,27 +3,27 @@
 ### Исходный код из раздела "Writing tests"
 ```python
 # ФИО: Щетинин Сергей Витальевич
-# Дата: 2026-11-10
+# Дата: 2026-11-9
 # Время: 21:20
-# Описание: 
+# Описание: переходит по ссылке https://playwright.dev/ и проверяет что переход произошел на нужный сайт
 # Я скопировал пример из раздела "Writing tests" и запустил его локально.
 
 import pytest
 from playwright.sync_api import Page, expect
 
-# Фикстура которая работает автоматически
+    # автоматическая фикстура
 @pytest.fixture(scope="function", autouse=True)
 def before_each_after_each(page: Page):
-    # Код перед запуском самого теста
+    # код перед началом теста
     print("before the test runs")
     page.goto("https://playwright.dev/")
     
     yield
     
-    # Код, который сработает сразу после окончания теста
+    # код после завершения теста
     print("after the test runs")
 
-# Тест проверяет, что браузер перешел по нужному адресу
+    # проврека ссылки по которой был произведен переход
 def test_main_navigation(page: Page):
     expect(page).to_have_url("https://playwright.dev/")
 ```
