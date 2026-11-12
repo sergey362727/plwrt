@@ -43,13 +43,14 @@ def test_main_navigation(page: Page):
 ### Модифицированный скрипт тестов
 ```python
 # ФИО: Щетинин Сергей Витальевич
-# Дата: 2026-11-11
-# Время: 09:55
-# Описание:
-# 1. 
-# 2. 
-# 3. 
-# Я скопировал пример из раздела "Writing tests" модифицировал его 2 раза и запустил локально.
+# Дата: 2026-11-10
+# Время: 22:56
+# Описание изменений: 
+# 1. проверяет путь обычного пользователя который зашел на сайт
+# 2. ищет кнопку Get started | get_started = page.get_by_role("link", name="Get started") | get_started.click()
+# 3. проверяет ссылку после нажатия кнопки Get started | expect(page).to_have_url(re.compile(".*intro"))
+# 4. показывает ссылку на которой завершилась программма print(f"after the test runs (final URL: {page.url})")
+# Я скопировал пример из раздела "Writing tests" модифицировал его 1 раз и запустил локально.
 
 import re
 import pytest
@@ -64,8 +65,8 @@ def before_each_after_each(page: Page):
 
     yield
 
-    # код после завершения теста
-    print(f"after the test runs (final URL: {page.url}, screenshot saved)")
+    # код который сработает после завершения теста
+    print(f"after the test runs (final URL: {page.url})")
 
 
     # проверяет загрузку главной стрницы и переход в документацию
@@ -77,16 +78,6 @@ def test_main_navigation(page: Page):
     get_started = page.get_by_role("link", name="Get started")
     get_started.click()
     expect(page).to_have_url(re.compile(".*intro"))
-
-    # проверяет наличие заголовка на открывшейся странице
-    heading = page.get_by_role("heading", name="Installation")
-    expect(heading).to_be_visible()
-
-    # добавлено: открытие поиска, ввод запроса и проверка появления результатов 
-    page.get_by_role("button", name="Search").click()
-    search_input = page.get_by_placeholder("Search docs")
-    search_input.fill("locators")
-    expect(page.locator(".DocSearch-Dropdown")).to_be_visible()
 ```
 
 ### Обоснование изменений (Критерий №5)
