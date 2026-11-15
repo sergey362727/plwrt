@@ -30,7 +30,7 @@ def before_each_after_each(page: Page, request: pytest.FixtureRequest):
 
 # проверяет загрузку главной страницы и сквозной сценарий поиска в документации
 def test_main_navigation(page: Page):
-    expect(page).to_have_url("https://playwright.dev")
+    expect(page).to_have_url("https://playwright.dev/")
     expect(page).to_have_title(re.compile("Playwright"))
 
     # поиск кнопки Get started и переход в документацию

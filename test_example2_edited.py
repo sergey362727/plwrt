@@ -27,7 +27,7 @@ def before_each_after_each(page: Page):
 
 # проверяет загрузку главной страницы и сквозной сценарий поиска в документации
 def test_main_navigation(page: Page):
-    expect(page).to_have_url("https://playwright.dev")
+    expect(page).to_have_url("https://playwright.dev/")
     expect(page).to_have_title(re.compile("Playwright"))
 
     # поиск кнопки Get started и переход в документацию
@@ -43,9 +43,12 @@ def test_main_navigation(page: Page):
     page.get_by_role("button", name="Search").click()
     search_input = page.get_by_placeholder("Search docs")
     search_input.fill("locators")
-    expect(page.locator(".DocSearch-Dropdown")).to_be_visible()
+    dropdown = page.locator(".DocSearch-Dropdown")
+    expect(dropdown).to_be_visible()
+    expect(dropdown.locator(".DocSearch-Hit").first).to_be_visible()  # добавить ожидание первой подсказки
 
     # переход по первому результату поиска и проверка открытой страницы
     search_input.press("Enter")
+
     expect(page).to_have_url(re.compile(".*locators"))
     expect(page.get_by_role("heading", name="Locators", exact=True)).to_be_visible()
